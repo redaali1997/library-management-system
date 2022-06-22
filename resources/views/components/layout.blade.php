@@ -16,13 +16,13 @@
 
 </head>
 
-<body>
+<body class="overflow-x-hidden">
 
     <nav class="w-screen h-16 bg-blue-500 flex justify-center items-center">
         <div class="w-4/5 flex justify-between items-center">
             <a class="text-xl font-bold px-2 no-underline text-white" href="{{ route('books.index') }}">Library
                 Management System</a>
-            <div>
+            <div class="flex items-center">
                 @auth
                     <div class="flex">
                         <div class="btn-group" role="group">
@@ -47,6 +47,10 @@
                     <a href="{{ route('register') }}"
                         class="border rounded py-1 px-2 m-2 text-white no-underline">Register</a>
                 @endauth
+                <div class="text-white border py-1 px-2 rounded">
+                    <a href="{{ route('change-lang') }}" class="hover:text-slate-800">En</a>
+                    <a href="{{ route('change-lang', 'ar') }}" class="border-l-2 pl-2 hover:text-slate-800">Ar</a>
+                </div>
             </div>
         </div>
     </nav>

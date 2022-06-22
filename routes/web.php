@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 */
 // Routes for books
 Route::resource('books', BookController::class);
-
+Route::get('/lang/{locale?}', [UserController::class, 'changeLang'])->name('change-lang');
 // Dashboard for authenticated user
 Route::get('/dashboard', [UserController::class, 'dashboard'])->middleware('auth')->name('dashboard');
 

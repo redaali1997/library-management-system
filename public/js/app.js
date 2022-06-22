@@ -5081,6 +5081,24 @@ __webpack_require__.r(__webpack_exports__);
 
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_1__["default"];
 alpinejs__WEBPACK_IMPORTED_MODULE_1__["default"].start();
+var langSelect = document.getElementById('lang');
+var book_en = document.getElementById('book-en');
+var book_ar = document.getElementById('book-ar');
+langSelect.addEventListener('change', changeLang);
+
+function changeLang() {
+  switch (langSelect.value) {
+    case 'en':
+      book_ar.setAttribute('class', 'hidden');
+      book_en.removeAttribute('class');
+      break;
+
+    case 'ar':
+      book_en.setAttribute('class', 'hidden');
+      book_ar.removeAttribute('class');
+      break;
+  }
+}
 
 /***/ }),
 

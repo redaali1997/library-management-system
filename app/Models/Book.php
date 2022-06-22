@@ -4,15 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 
 class Book extends Model
 {
-    use HasFactory;
+    use HasFactory, HasTranslations;
 
     protected $fillable = ['title', 'description', 'author', 'isbn', 'images', 'tags'];
     protected $casts = [
         'images' => 'array'
     ];
+    public $translatable = ['title', 'description'];
 
     /**
      * Get the user that owns the Book

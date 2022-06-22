@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class BookController extends Controller
 {
@@ -20,7 +21,10 @@ class BookController extends Controller
      */
     public function index(Request $request)
     {
-        return view('books.index')->with('books', Book::filter($request->tag)->paginate(6));
+        if (session()->has('locale')) {
+            App::setLocale(session()->get('locale'));
+        };
+        return view('books.index')->with('books', Book::filter($request->tag)->latest()->paginate(6));
     }
 
     /**
@@ -42,12 +46,13 @@ class BookController extends Controller
     public function store(Request $request)
     {
         // Validation
-        $new_book = $request->validate([
+        $validated = $request->validate([
             'title' => 'required|max:255',
             'description' => 'required',
             'author' => 'required',
             'isbn' => 'required|unique:books,isbn',
         ]);
+
         //Store multiple images
         $path = [];
         if ($request->hasFile('images')) {
@@ -55,9 +60,17 @@ class BookController extends Controller
                 $path[] = $image->storeAs('images', $image->getClientOriginalName(), 'public');
             }
         }
-        $new_book['images'] = $path;
-        $new_book['tags'] = $request->tags;
-
+        $new_book = [
+            'title' => [
+                'en' => $validated['title'],
+                'ar' => $request->input('ar-title'),
+            ],
+            'description' => $validated['description'],
+            'author' => $validated['author'],
+            'isbn' => $validated['isbn'],
+            'images' => $path,
+            'tags' => $request->tags
+        ];
         // Create a new book
         auth()->user()->books()->create($new_book);
 
