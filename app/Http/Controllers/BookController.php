@@ -65,7 +65,10 @@ class BookController extends Controller
                 'en' => $validated['title'],
                 'ar' => $request->input('ar-title'),
             ],
-            'description' => $validated['description'],
+            'description' => [
+                'en' => $validated['description'],
+                'ar' => $request->input('ar-description')
+            ],
             'author' => $validated['author'],
             'isbn' => $validated['isbn'],
             'images' => $path,
@@ -85,6 +88,9 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
+        if (session()->has('locale')) {
+            App::setLocale(session()->get('locale'));
+        };
         return view('books.show')->with('book', $book);
     }
 

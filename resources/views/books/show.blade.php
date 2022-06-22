@@ -34,8 +34,7 @@
         <x-tags :book="$book" />
         <div class="py-6">
             <h3 class="text-center text-lg font-semibold">Description</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit sit porro voluptatibus accusantium eligendi
-                non dignissimos ut, corporis quas impedit.</p>
+            <p class="text-center">{{ $book->description }}</p>
         </div>
         @auth
             @if (!auth()->user()->hasOrder($book->id))
