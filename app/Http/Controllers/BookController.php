@@ -24,7 +24,14 @@ class BookController extends Controller
         if (session()->has('locale')) {
             App::setLocale(session()->get('locale'));
         };
-        return view('books.index')->with('books', Book::filter($request->tag)->latest()->paginate(6));
+
+        if ($request->tag) {
+            $books = Book::filter($request->tag)->orderBy('id', 'desc')->paginate(6);
+            $books->appends(['tag' => $request->tag]);
+        } else {
+            $books = Book::orderBy('id', 'desc')->paginate(6);
+        }
+        return view('books.index')->with('books', $books);
     }
 
     /**
